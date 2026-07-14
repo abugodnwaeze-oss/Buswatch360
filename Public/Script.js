@@ -54,10 +54,15 @@ async function loadStudents() {
     <td>${student.bus}</td>
     <td>${student.status}</td>
     <td>
+        <button onclick="editStudent(${student.id})">Edit</button>
         <button onclick="deleteStudent(${student.id})">Delete</button>
+        async function editStudent(id) {
+
+    alert("Edit student with ID: " + id);
+
+}
     </td>
-</tr>
-`;
+</tr>`;
     });
 }
 

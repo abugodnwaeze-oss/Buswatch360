@@ -4,58 +4,46 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-const db = require("./database/database");
+const db = require("./Database/database");
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "Public")));
+
+// ==========================
+// PAGES
+// ==========================
 
 // Homepage
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+    res.sendFile(path.join(__dirname, "Public", "index.html"));
 });
 
 // Login page
 app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "login.html"));
+    res.sendFile(path.join(__dirname, "Public", "login.html"));
 });
 
 // Admin page
 app.get("/admin", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "admin.html"));
+    res.sendFile(path.join(__dirname, "Public", "admin.html"));
 });
 
 // Students page
 app.get("/students", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "students.html"));
-});app.get("/students/all", (req, res) => {
-app.delete("/students/delete/:id", (req, res) => {
-
-    const id = req.params.id;
-
-    db.run(
-        "DELETE FROM students WHERE id = ?",
-        [id],
-        function (err) {
-
-            if (err) {
-                console.log(err.message);
-                return res.send("Error deleting student.");
-            }
-
-            if (this.changes === 0) {
-                return res.send("Student not found.");
-            }
-
-            res.send("Student deleted successfully!");
-
-        }
-    );
-
+    res.sendFile(path.join(__dirname, "Public", "students.html"));
 });
+
+// ==========================
+// STUDENT API
+// ==========================
+
+// Get all students
+app.get("/students/all", (req, res) => {
+
     db.all("SELECT * FROM students", [], (err, rows) => {
 
         if (err) {
@@ -69,7 +57,7 @@ app.delete("/students/delete/:id", (req, res) => {
 
 });
 
-// Add student API
+// Add student
 app.post("/students/add", (req, res) => {
 
     const { fullName, studentClass, bus } = req.body;
@@ -89,11 +77,43 @@ app.post("/students/add", (req, res) => {
             res.send("Student saved successfully!");
 
         }
+
     );
 
 });
 
-// Start server
+// Delete student
+app.delete("/students/delete/:id", (req, res) => {
+
+    const id = req.params.id;
+
+    db.run(
+        "DELETE FROM students WHERE id = ?",
+        [id],
+
+        function (err) {
+
+            if (err) {
+                console.log(err.message);
+                return res.send("Error deleting student.");
+            }
+
+            if (this.changes === 0) {
+                return res.send("Student not found.");
+            }
+
+            res.send("Student deleted successfully!");
+
+        }
+
+    );
+
+});
+
+// ==========================
+// START SERVER
+// ==========================
+
 app.listen(PORT, () => {
     console.log(`🚀 BusWatch360 running at http://localhost:${PORT}`);
 });
