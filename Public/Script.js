@@ -31,10 +31,11 @@ if (form) {
         alert(result);
 
         form.reset();
-loadStudents();
+        loadStudents();
     });
+}
 
-}async function loadStudents() {
+async function loadStudents() {
 
     const response = await fetch("/students/all");
 
@@ -45,20 +46,36 @@ loadStudents();
     if (!tableBody) return;
 
     tableBody.innerHTML = "";
-
     students.forEach(student => {
-
         tableBody.innerHTML += `
-            <tr>
-                <td>${student.fullName}</td>
-                <td>${student.studentClass}</td>
-                <td>${student.bus}</td>
-                <td>${student.status}</td>
-            </tr>
-        `;
-
+<tr>
+    <td>${student.fullName}</td>
+    <td>${student.studentClass}</td>
+    <td>${student.bus}</td>
+    <td>${student.status}</td>
+    <td>
+        <button onclick="deleteStudent(${student.id})">Delete</button>
+    </td>
+</tr>
+`;
     });
-
 }
 
 loadStudents();
+async function deleteStudent(id) {
+
+    const confirmDelete = confirm("Are you sure you want to delete this student?");
+
+    if (!confirmDelete) return;
+
+    const response = await fetch(`/students/delete/${id}`, {
+        method: "DELETE"
+    });
+
+    const result = await response.text();
+
+    alert(result);
+
+    loadStudents();
+
+}

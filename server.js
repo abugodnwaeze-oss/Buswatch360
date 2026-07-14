@@ -32,7 +32,30 @@ app.get("/admin", (req, res) => {
 app.get("/students", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "students.html"));
 });app.get("/students/all", (req, res) => {
+app.delete("/students/delete/:id", (req, res) => {
 
+    const id = req.params.id;
+
+    db.run(
+        "DELETE FROM students WHERE id = ?",
+        [id],
+        function (err) {
+
+            if (err) {
+                console.log(err.message);
+                return res.send("Error deleting student.");
+            }
+
+            if (this.changes === 0) {
+                return res.send("Student not found.");
+            }
+
+            res.send("Student deleted successfully!");
+
+        }
+    );
+
+});
     db.all("SELECT * FROM students", [], (err, rows) => {
 
         if (err) {
