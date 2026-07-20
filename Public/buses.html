@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Management - BusWatch360</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🚌 Bus Management</h1>
+
+    <form id="busForm">
+
+        <input
+            type="text"
+            id="busName"
+            placeholder="Bus Name"
+            required
+        >
+
+        <input
+            type="text"
+            id="plateNumber"
+            placeholder="Plate Number"
+            required
+        >
+
+        <input
+            type="number"
+            id="capacity"
+            placeholder="Capacity"
+            required
+        >
+
+        <input
+            type="text"
+            id="driver"
+            placeholder="Driver Name"
+            required
+        >
+
+        <button type="submit">
+            Add Bus
+        </button>
+
+    </form>
+
+    <br>
+
+    <table border="1" width="100%">
+
+        <thead>
+
+            <tr>
+
+                <th>Bus Name</th>
+                <th>Plate Number</th>
+                <th>Capacity</th>
+                <th>Driver</th>
+                <th>Status</th>
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="busTableBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

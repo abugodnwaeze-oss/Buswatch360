@@ -22,4 +22,13 @@ module.exports = db;db.serialize(() => {
             status TEXT DEFAULT 'Active'
         )
     `);
-});
+});db.run(`
+CREATE TABLE IF NOT EXISTS buses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    busName TEXT NOT NULL,
+    plateNumber TEXT NOT NULL,
+    capacity INTEGER,
+    driver TEXT,
+    status TEXT DEFAULT 'Available'
+)
+`);
