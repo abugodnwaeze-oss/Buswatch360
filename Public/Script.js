@@ -1,6 +1,38 @@
-// ======================================
+// =====================================
+// LOAD BUS DROPDOWN
+// =====================================
+
+async function loadBusDropdown() {
+
+    const busSelect = document.getElementById("bus");
+
+    if (!busSelect) return;
+
+    const response = await fetch("/buses/all");
+
+    const buses = await response.json();
+
+    busSelect.innerHTML = `
+        <option value="">Select Bus</option>
+    `;
+
+    buses.forEach(bus => {
+
+        busSelect.innerHTML += `
+            <option value="${bus.busName}">
+                ${bus.busName}
+            </option>
+        `;
+
+    });
+
+}
+
+loadBusDropdown();
+
+// =====================================
 // STUDENT MANAGEMENT
-// ======================================
+// =====================================
 
 const studentForm = document.getElementById("studentForm");
 
@@ -26,13 +58,12 @@ if (studentForm) {
             })
         });
 
-        const result = await response.text();
-
-        alert(result);
+        alert(await response.text());
 
         studentForm.reset();
 
         loadStudents();
+        loadBusDropdown();
 
     });
 
@@ -40,19 +71,19 @@ if (studentForm) {
 
 async function loadStudents() {
 
-    const tableBody = document.getElementById("studentTableBody");
+    const table = document.getElementById("studentTableBody");
 
-    if (!tableBody) return;
+    if (!table) return;
 
     const response = await fetch("/students/all");
 
     const students = await response.json();
 
-    tableBody.innerHTML = "";
+    table.innerHTML = "";
 
     students.forEach(student => {
 
-        tableBody.innerHTML += `
+        table.innerHTML += `
         <tr>
             <td>${student.fullName}</td>
             <td>${student.studentClass}</td>
@@ -72,15 +103,11 @@ async function loadStudents() {
 
 async function deleteStudent(id){
 
-    if(!confirm("Delete this student?")) return;
+    if(!confirm("Delete student?")) return;
 
-    const response = await fetch(`/students/delete/${id}`,{
+    await fetch(`/students/delete/${id}`,{
         method:"DELETE"
     });
-
-    const result = await response.text();
-
-    alert(result);
 
     loadStudents();
 
@@ -88,25 +115,24 @@ async function deleteStudent(id){
 
 loadStudents();
 
-
-// ======================================
+// =====================================
 // BUS MANAGEMENT
-// ======================================
+// =====================================
 
 const busForm = document.getElementById("busForm");
 
-if (busForm) {
+if(busForm){
 
-    busForm.addEventListener("submit", async (e) => {
+    busForm.addEventListener("submit",async(e)=>{
 
         e.preventDefault();
 
-        const busName = document.getElementById("busName").value;
-        const plateNumber = document.getElementById("plateNumber").value;
-        const capacity = document.getElementById("capacity").value;
-        const driver = document.getElementById("driver").value;
+        const busName=document.getElementById("busName").value;
+        const plateNumber=document.getElementById("plateNumber").value;
+        const capacity=document.getElementById("capacity").value;
+        const driver=document.getElementById("driver").value;
 
-        const response = await fetch("/buses/add",{
+        const response=await fetch("/buses/add",{
 
             method:"POST",
 
@@ -115,23 +141,20 @@ if (busForm) {
             },
 
             body:JSON.stringify({
-
                 busName,
                 plateNumber,
                 capacity,
                 driver
-
             })
 
         });
 
-        const result = await response.text();
-
-        alert(result);
+        alert(await response.text());
 
         busForm.reset();
 
         loadBuses();
+        loadBusDropdown();
 
     });
 
@@ -139,19 +162,19 @@ if (busForm) {
 
 async function loadBuses(){
 
-    const tableBody = document.getElementById("busTableBody");
+    const table=document.getElementById("busTableBody");
 
-    if(!tableBody) return;
+    if(!table) return;
 
-    const response = await fetch("/buses/all");
+    const response=await fetch("/buses/all");
 
-    const buses = await response.json();
+    const buses=await response.json();
 
-    tableBody.innerHTML = "";
+    table.innerHTML="";
 
     buses.forEach(bus=>{
 
-        tableBody.innerHTML += `
+        table.innerHTML+=`
         <tr>
 
             <td>${bus.busName}</td>
@@ -161,11 +184,9 @@ async function loadBuses(){
             <td>${bus.status}</td>
 
             <td>
-
                 <button onclick="deleteBus(${bus.id})">
                     Delete
                 </button>
-
             </td>
 
         </tr>
@@ -177,20 +198,109 @@ async function loadBuses(){
 
 async function deleteBus(id){
 
-    if(!confirm("Delete this bus?")) return;
+    if(!confirm("Delete bus?")) return;
 
-    const response = await fetch(`/buses/delete/${id}`,{
-
+    await fetch(`/buses/delete/${id}`,{
         method:"DELETE"
-
     });
 
-    const result = await response.text();
-
-    alert(result);
-
     loadBuses();
+    loadBusDropdown();
 
 }
 
 loadBuses();
+
+// =====================================
+// DRIVER MANAGEMENT
+// =====================================
+
+const driverForm = document.getElementById("driverForm");
+
+if(driverForm){
+
+    driverForm.addEventListener("submit",async(e)=>{
+
+        e.preventDefault();
+
+        const driverName=document.getElementById("driverName").value;
+        const phone=document.getElementById("phone").value;
+        const licenseNumber=document.getElementById("licenseNumber").value;
+        const assignedBus=document.getElementById("assignedBus").value;
+
+        const response=await fetch("/drivers/add",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                driverName,
+                phone,
+                licenseNumber,
+                assignedBus
+            })
+
+        });
+
+        alert(await response.text());
+
+        driverForm.reset();
+
+        loadDrivers();
+
+    });
+
+}
+
+async function loadDrivers(){
+
+    const table=document.getElementById("driverTableBody");
+
+    if(!table) return;
+
+    const response=await fetch("/drivers/all");
+
+    const drivers=await response.json();
+
+    table.innerHTML="";
+
+    drivers.forEach(driver=>{
+
+        table.innerHTML+=`
+        <tr>
+
+            <td>${driver.driverName}</td>
+            <td>${driver.phone}</td>
+            <td>${driver.licenseNumber}</td>
+            <td>${driver.assignedBus}</td>
+            <td>${driver.status}</td>
+
+            <td>
+                <button onclick="deleteDriver(${driver.id})">
+                    Delete
+                </button>
+            </td>
+
+        </tr>
+        `;
+
+    });
+
+}
+
+async function deleteDriver(id){
+
+    if(!confirm("Delete driver?")) return;
+
+    await fetch(`/drivers/delete/${id}`,{
+        method:"DELETE"
+    });
+
+    loadDrivers();
+
+}
+
+loadDrivers();

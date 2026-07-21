@@ -6,18 +6,17 @@ const PORT = 3000;
 
 const db = require("./Database/database");
 
-// ====================================
+// ==========================
 // MIDDLEWARE
-// ====================================
+// ==========================
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.static(path.join(__dirname, "Public")));
 
-// ====================================
+// ==========================
 // PAGES
-// ====================================
+// ==========================
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "Public", "index.html"));
@@ -39,19 +38,19 @@ app.get("/buses", (req, res) => {
     res.sendFile(path.join(__dirname, "Public", "buses.html"));
 });
 
-// ====================================
-// STUDENT API
-// ====================================
+app.get("/drivers", (req, res) => {
+    res.sendFile(path.join(__dirname, "Public", "drivers.html"));
+});
 
-// Get all students
+// ==========================
+// STUDENTS
+// ==========================
+
 app.get("/students/all", (req, res) => {
 
     db.all("SELECT * FROM students", [], (err, rows) => {
 
-        if (err) {
-            console.log(err.message);
-            return res.status(500).json([]);
-        }
+        if (err) return res.status(500).json([]);
 
         res.json(rows);
 
@@ -59,22 +58,18 @@ app.get("/students/all", (req, res) => {
 
 });
 
-// Add student
 app.post("/students/add", (req, res) => {
 
     const { fullName, studentClass, bus } = req.body;
 
     db.run(
         `INSERT INTO students(fullName, studentClass, bus)
-         VALUES(?, ?, ?)`,
+         VALUES(?,?,?)`,
         [fullName, studentClass, bus],
 
         function(err){
 
-            if(err){
-                console.log(err.message);
-                return res.send("Error saving student.");
-            }
+            if(err) return res.send("Error saving student.");
 
             res.send("Student saved successfully!");
 
@@ -84,25 +79,15 @@ app.post("/students/add", (req, res) => {
 
 });
 
-// Delete student
-app.delete("/students/delete/:id", (req, res) => {
-
-    const id = req.params.id;
+app.delete("/students/delete/:id",(req,res)=>{
 
     db.run(
-        "DELETE FROM students WHERE id = ?",
-        [id],
+        "DELETE FROM students WHERE id=?",
+        [req.params.id],
 
         function(err){
 
-            if(err){
-                console.log(err.message);
-                return res.send("Error deleting student.");
-            }
-
-            if(this.changes === 0){
-                return res.send("Student not found.");
-            }
+            if(err) return res.send("Error deleting student.");
 
             res.send("Student deleted successfully!");
 
@@ -112,12 +97,23 @@ app.delete("/students/delete/:id", (req, res) => {
 
 });
 
-// ====================================
-// BUS API
-// ====================================
+// ==========================
+// BUSES
+// ==========================
 
-// Add Bus
-app.post("/buses/add", (req, res) => {
+app.get("/buses/all",(req,res)=>{
+
+    db.all("SELECT * FROM buses",[],(err,rows)=>{
+
+        if(err) return res.status(500).json([]);
+
+        res.json(rows);
+
+    });
+
+});
+
+app.post("/buses/add",(req,res)=>{
 
     const {
         busName,
@@ -127,8 +123,8 @@ app.post("/buses/add", (req, res) => {
     } = req.body;
 
     db.run(
-        `INSERT INTO buses(busName, plateNumber, capacity, driver)
-         VALUES(?, ?, ?, ?)`,
+        `INSERT INTO buses(busName,plateNumber,capacity,driver)
+         VALUES(?,?,?,?)`,
         [
             busName,
             plateNumber,
@@ -138,10 +134,7 @@ app.post("/buses/add", (req, res) => {
 
         function(err){
 
-            if(err){
-                console.log(err.message);
-                return res.send("Error saving bus.");
-            }
+            if(err) return res.send("Error saving bus.");
 
             res.send("Bus saved successfully!");
 
@@ -151,46 +144,15 @@ app.post("/buses/add", (req, res) => {
 
 });
 
-// Get all buses
-app.get("/buses/all", (req, res) => {
-
-    db.all(
-        "SELECT * FROM buses",
-        [],
-        (err, rows) => {
-
-            if(err){
-                console.log(err.message);
-                return res.status(500).json([]);
-            }
-
-            res.json(rows);
-
-        }
-
-    );
-
-});
-
-// Delete Bus
-app.delete("/buses/delete/:id", (req, res) => {
-
-    const id = req.params.id;
+app.delete("/buses/delete/:id",(req,res)=>{
 
     db.run(
-        "DELETE FROM buses WHERE id = ?",
-        [id],
+        "DELETE FROM buses WHERE id=?",
+        [req.params.id],
 
         function(err){
 
-            if(err){
-                console.log(err.message);
-                return res.send("Error deleting bus.");
-            }
-
-            if(this.changes === 0){
-                return res.send("Bus not found.");
-            }
+            if(err) return res.send("Error deleting bus.");
 
             res.send("Bus deleted successfully!");
 
@@ -200,10 +162,98 @@ app.delete("/buses/delete/:id", (req, res) => {
 
 });
 
-// ====================================
-// SERVER
-// ====================================
+// ==========================
+// DRIVERS
+// ==========================
 
-app.listen(PORT, () => {
+// Get all drivers
+
+app.get("/drivers/all",(req,res)=>{
+
+    db.all("SELECT * FROM drivers",[],(err,rows)=>{
+
+        if(err) return res.status(500).json([]);
+
+        res.json(rows);
+
+    });
+
+});
+
+// Add Driver
+
+app.post("/drivers/add",(req,res)=>{
+
+    const {
+
+        driverName,
+        phone,
+        licenseNumber,
+        assignedBus
+
+    } = req.body;
+
+    db.run(
+
+        `INSERT INTO drivers
+        (driverName,phone,licenseNumber,assignedBus)
+        VALUES(?,?,?,?)`,
+
+        [
+            driverName,
+            phone,
+            licenseNumber,
+            assignedBus
+        ],
+
+        function(err){
+
+            if(err){
+
+                console.log(err.message);
+
+                return res.send("Error saving driver.");
+
+            }
+
+            res.send("Driver saved successfully!");
+
+        }
+
+    );
+
+});
+
+// Delete Driver
+
+app.delete("/drivers/delete/:id",(req,res)=>{
+
+    db.run(
+
+        "DELETE FROM drivers WHERE id=?",
+
+        [req.params.id],
+
+        function(err){
+
+            if(err){
+
+                return res.send("Error deleting driver.");
+
+            }
+
+            res.send("Driver deleted successfully!");
+
+        }
+
+    );
+
+});
+
+// ==========================
+
+app.listen(PORT,()=>{
+
     console.log(`🚀 BusWatch360 running at http://localhost:${PORT}`);
+
 });

@@ -31,4 +31,20 @@ CREATE TABLE IF NOT EXISTS buses (
     driver TEXT,
     status TEXT DEFAULT 'Available'
 )
+`);db.run(`
+CREATE TABLE IF NOT EXISTS drivers (
+
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    driverName TEXT NOT NULL,
+
+    phone TEXT NOT NULL,
+
+    licenseNumber TEXT NOT NULL,
+
+    assignedBus TEXT NOT NULL,
+
+    status TEXT DEFAULT 'Available'
+
+)
 `);
