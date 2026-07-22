@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bus Management - BusWatch360</title>
+
+    <title>Bus Management</title>
 
     <link rel="stylesheet" href="/css/style.css">
+
 </head>
 
 <body>
@@ -17,18 +22,26 @@
         <h2>🚌 BusWatch360</h2>
 
         <ul>
+
             <li><a href="/admin">🏠 Dashboard</a></li>
+
             <li><a href="/students">👨 Students</a></li>
+
             <li><a href="/buses">🚌 Buses</a></li>
+
             <li><a href="/drivers">👨‍✈️ Drivers</a></li>
-            <li><a href="/reports">📊 Reports</a></li>
+
+            <li><a href="/trip-centre">🚍 Trip Centre</a></li>
+
+            <li><a href="#">📊 Reports</a></li>
+
         </ul>
 
     </div>
 
     <div class="main-content">
 
-        <h1>Bus Management</h1>
+        <h1>🚌 Bus Management</h1>
 
         <form id="busForm">
 
@@ -53,17 +66,18 @@
                 required
             >
 
-            <select
-                id="driver"
-                required
-            >
+            <select id="driver" required>
+
                 <option value="">
                     Select Driver
                 </option>
+
             </select>
 
             <button type="submit">
-                Add Bus
+
+                Save Bus
+
             </button>
 
         </form>
@@ -76,7 +90,7 @@
 
                 <tr>
 
-                    <th>Bus Name</th>
+                    <th>Bus</th>
                     <th>Plate Number</th>
                     <th>Capacity</th>
                     <th>Driver</th>
@@ -100,4 +114,5 @@
 <script src="/script.js"></script>
 
 </body>
+
 </html>

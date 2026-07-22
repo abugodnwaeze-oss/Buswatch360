@@ -336,3 +336,93 @@ async function deleteDriver(id){
 }
 
 loadDrivers();
+// =====================================
+// TRIP CENTRE
+// =====================================
+
+async function loadTripBusDropdown() {
+
+    const tripBus = document.getElementById("tripBus");
+
+    if (!tripBus) return;
+
+    const response = await fetch("/buses/all");
+
+    const buses = await response.json();
+
+    tripBus.innerHTML = `
+        <option value="">
+            Select Bus
+        </option>
+    `;
+
+    buses.forEach(bus => {
+
+        tripBus.innerHTML += `
+            <option value="${bus.busName}">
+                ${bus.busName}
+            </option>
+        `;
+
+    });
+
+}
+
+loadTripBusDropdown();
+const tripBus = document.getElementById("tripBus");
+
+if (tripBus) {
+
+    tripBus.addEventListener("change", loadTripStudents);
+
+}
+
+async function loadTripStudents() {
+
+    const bus = document.getElementById("tripBus").value;
+
+    const table = document.getElementById("tripStudentTable");
+
+    if (!bus) {
+
+        table.innerHTML = "";
+
+        return;
+
+    }
+
+    const response = await fetch(`/students/bus/${bus}`);
+
+    const students = await response.json();
+
+    table.innerHTML = "";
+
+    students.forEach(student => {
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>${student.fullName}</td>
+
+            <td>${student.studentClass}</td>
+
+            <td>${student.status}</td>
+
+            <td>
+
+                <button>
+
+                    Board
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}

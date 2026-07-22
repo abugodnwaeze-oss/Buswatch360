@@ -2,79 +2,117 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Driver Management</title>
 
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="admin-container">
 
-    <h1>👨‍✈️ Driver Management</h1>
+    <div class="sidebar">
 
-    <form id="driverForm">
+        <h2>🚌 BusWatch360</h2>
 
-        <input
-            type="text"
-            id="driverName"
-            placeholder="Driver Name"
-            required
-        >
+        <ul>
 
-        <input
-            type="text"
-            id="phone"
-            placeholder="Phone Number"
-            required
-        >
+            <li><a href="/admin">🏠 Dashboard</a></li>
 
-        <input
-            type="text"
-            id="licenseNumber"
-            placeholder="License Number"
-            required
-        >
+            <li><a href="/students">👨 Students</a></li>
 
-        <input
-            type="text"
-            id="assignedBus"
-            placeholder="Assigned Bus"
-            required
-        >
+            <li><a href="/buses">🚌 Buses</a></li>
 
-        <button type="submit">
-            Save Driver
-        </button>
+            <li><a href="/drivers">👨‍✈️ Drivers</a></li>
 
-    </form>
+            <li><a href="/trip-centre">🚍 Trip Centre</a></li>
 
-    <br>
+            <li><a href="#">📊 Reports</a></li>
 
-    <table border="1" width="100%">
+        </ul>
 
-        <thead>
+    </div>
 
-            <tr>
+    <div class="main-content">
 
-                <th>Name</th>
-                <th>Phone</th>
-                <th>License</th>
-                <th>Assigned Bus</th>
-                <th>Status</th>
-                <th>Action</th>
+        <h1>👨‍✈️ Driver Management</h1>
 
-            </tr>
+        <form id="driverForm">
 
-        </thead>
+            <input
+                type="text"
+                id="driverName"
+                placeholder="Driver Name"
+                required
+            >
 
-        <tbody id="driverTableBody">
+            <input
+                type="text"
+                id="phone"
+                placeholder="Phone Number"
+                required
+            >
 
-        </tbody>
+            <input
+                type="text"
+                id="licenseNumber"
+                placeholder="License Number"
+                required
+            >
 
-    </table>
+            <select id="assignedBus" required>
+
+                <option value="">
+                    Select Bus
+                </option>
+
+            </select>
+
+            <button type="submit">
+
+                Save Driver
+
+            </button>
+
+        </form>
+
+        <br>
+
+        <table class="student-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Driver</th>
+
+                    <th>Phone</th>
+
+                    <th>License</th>
+
+                    <th>Assigned Bus</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="driverTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
 

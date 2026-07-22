@@ -52,7 +52,31 @@ app.get("/trip-centre", (req, res) => {
 
 // Get all students
 app.get("/students/all", (req, res) => {
+app.get("/students/bus/:busName", (req, res) => {
 
+    db.all(
+
+        "SELECT * FROM students WHERE bus = ?",
+
+        [req.params.busName],
+
+        (err, rows) => {
+
+            if (err) {
+
+                console.log(err.message);
+
+                return res.status(500).json([]);
+
+            }
+
+            res.json(rows);
+
+        }
+
+    );
+
+});
     db.all("SELECT * FROM students", [], (err, rows) => {
 
         if (err) {
