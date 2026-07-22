@@ -394,7 +394,54 @@ async function loadTripStudents() {
     const response = await fetch(`/students/bus/${bus}`);
 
     const students = await response.json();
+document.getElementById("assignedCount").innerText = students.length;
 
+const boarded = students.filter(
+    student => student.status === "Boarded"
+).length;
+
+document.getElementById("boardedCount").innerText = boarded;
+
+document.getElementById("waitingCount").innerText =
+    students.length - boarded;
+    const missingList =
+document.getElementById("missingStudents");
+
+missingList.innerHTML = "";
+
+students.forEach(student=>{
+
+    if(student.status !== "Boarded"){
+
+        missingList.innerHTML += `
+            <li>${student.fullName}</li>
+        `;
+
+    }
+
+});
+    const departureStatus =
+    document.getElementById("departureStatus");
+
+if (students.length > 0 && boarded === students.length) {
+
+    departureStatus.classList.remove("not-ready");
+
+    departureStatus.classList.add("ready");
+
+    departureStatus.innerHTML =
+        "🟢 READY TO DEPART";
+
+} else {
+
+    departureStatus.classList.remove("ready");
+
+    departureStatus.classList.add("not-ready");
+
+    departureStatus.innerHTML =
+        "🔴 NOT READY TO DEPART";
+
+}
     table.innerHTML = "";
 
     students.forEach(student => {
