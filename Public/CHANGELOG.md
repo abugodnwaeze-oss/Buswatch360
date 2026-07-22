@@ -3,6 +3,40 @@
 All notable changes to **BusWatch360** will be documented in this file.
 
 This project follows a milestone-based versioning approach during development.
+# Changelog
+
+## 2026-07-22
+
+### Added
+
+* Created Trip Centre module (`trip-centre.js`)
+* Migrated Trip Centre code out of `script.js`
+* Added live Assigned, Boarded and Waiting counters
+* Added Ready to Depart status indicator
+* Added Missing Students panel
+* Created modular JavaScript folder (`Public/js`)
+* Created placeholder modules:
+
+  * students.js
+  * buses.js
+  * drivers.js
+  * dashboard.js
+  * trip-centre.js
+  * utils.js
+
+### Improved
+
+* Project architecture now follows a modular structure.
+* Trip Centre is now independent from the rest of the application.
+
+### Planned
+
+* Trip Engine
+* Trips database
+* Trip history
+* Morning/Afternoon trips
+* Parent notifications
+* GPS tracking
 
 ---
 
