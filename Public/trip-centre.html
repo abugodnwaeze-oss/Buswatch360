@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Centre - BusWatch360</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <div class="sidebar">
+
+        <h2>🚌 BusWatch360</h2>
+
+        <ul>
+            <li><a href="/admin">🏠 Dashboard</a></li>
+            <li><a href="/students">👨 Students</a></li>
+            <li><a href="/buses">🚌 Buses</a></li>
+            <li><a href="/drivers">👨‍✈️ Drivers</a></li>
+            <li><a href="/trip-centre">🚍 Trip Centre</a></li>
+            <li><a href="/reports">📊 Reports</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main-content">
+
+        <h1>🚍 Trip Centre</h1>
+
+        <h3>Select Bus</h3>
+
+        <select id="tripBus" required>
+
+            <option value="">
+                Select Bus
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <h3>Students Assigned</h3>
+
+        <table class="student-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Student</th>
+                    <th>Class</th>
+                    <th>Status</th>
+                    <th>Board</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="tripStudentTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="/script.js"></script>
+
+</body>
+</html>

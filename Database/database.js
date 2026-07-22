@@ -1,5 +1,6 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const { app } = require("../server");
 
 const db = new sqlite3.Database(
     path.join(__dirname, "buswatch360.db"),
@@ -12,39 +13,8 @@ const db = new sqlite3.Database(
     }
 );
 
-module.exports = db;db.serialize(() => {
-    db.run(`
-        CREATE TABLE IF NOT EXISTS students (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            fullName TEXT NOT NULL,
-            studentClass TEXT NOT NULL,
-            bus TEXT NOT NULL,
-            status TEXT DEFAULT 'Active'
-        )
-    `);
-});db.run(`
-CREATE TABLE IF NOT EXISTS buses (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    busName TEXT NOT NULL,
-    plateNumber TEXT NOT NULL,
-    capacity INTEGER,
-    driver TEXT,
-    status TEXT DEFAULT 'Available'
-)
-`);db.run(`
-CREATE TABLE IF NOT EXISTS drivers (
+db.serialize(() => {
+    // Database initialization can go here
+});
 
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-    driverName TEXT NOT NULL,
-
-    phone TEXT NOT NULL,
-
-    licenseNumber TEXT NOT NULL,
-
-    assignedBus TEXT NOT NULL,
-
-    status TEXT DEFAULT 'Available'
-
-)
-`);
+module.exports = db;
