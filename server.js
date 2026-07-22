@@ -95,6 +95,24 @@ app.delete("/students/delete/:id",(req,res)=>{
 
     );
 
+});// ==========================
+// DRIVER API
+// ==========================
+
+// Get all drivers
+app.get("/drivers/all", (req, res) => {
+
+    db.all("SELECT * FROM drivers", [], (err, rows) => {
+
+        if (err) {
+            console.log(err.message);
+            return res.status(500).json([]);
+        }
+
+        res.json(rows);
+
+    });
+
 });
 
 // ==========================

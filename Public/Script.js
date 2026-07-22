@@ -156,7 +156,39 @@ if(busForm){
         loadBuses();
         loadBusDropdown();
 
+    });// =====================================
+// LOAD DRIVER DROPDOWN
+// =====================================
+
+async function loadDriverDropdown() {
+
+    const driverSelect = document.getElementById("driver");
+
+    if (!driverSelect) return;
+
+    const response = await fetch("/drivers/all");
+
+    const drivers = await response.json();
+
+    driverSelect.innerHTML = `
+        <option value="">
+            Select Driver
+        </option>
+    `;
+
+    drivers.forEach(driver => {
+
+        driverSelect.innerHTML += `
+            <option value="${driver.driverName}">
+                ${driver.driverName}
+            </option>
+        `;
+
     });
+
+}
+
+loadDriverDropdown();
 
 }
 

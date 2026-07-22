@@ -5,78 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bus Management - BusWatch360</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 
-<div class="container">
+<div class="admin-container">
 
-    <h1>🚌 Bus Management</h1>
+    <div class="sidebar">
 
-    <form id="busForm">
+        <h2>🚌 BusWatch360</h2>
 
-        <input
-            type="text"
-            id="busName"
-            placeholder="Bus Name"
-            required
-        >
+        <ul>
+            <li><a href="/admin">🏠 Dashboard</a></li>
+            <li><a href="/students">👨 Students</a></li>
+            <li><a href="/buses">🚌 Buses</a></li>
+            <li><a href="/drivers">👨‍✈️ Drivers</a></li>
+            <li><a href="/reports">📊 Reports</a></li>
+        </ul>
 
-        <input
-            type="text"
-            id="plateNumber"
-            placeholder="Plate Number"
-            required
-        >
+    </div>
 
-        <input
-            type="number"
-            id="capacity"
-            placeholder="Capacity"
-            required
-        >
+    <div class="main-content">
 
-        <input
-            type="text"
-            id="driver"
-            placeholder="Driver Name"
-            required
-        >
+        <h1>Bus Management</h1>
 
-        <button type="submit">
-            Add Bus
-        </button>
+        <form id="busForm">
 
-    </form>
+            <input
+                type="text"
+                id="busName"
+                placeholder="Bus Name"
+                required
+            >
 
-    <br>
+            <input
+                type="text"
+                id="plateNumber"
+                placeholder="Plate Number"
+                required
+            >
 
-    <table border="1" width="100%">
+            <input
+                type="number"
+                id="capacity"
+                placeholder="Capacity"
+                required
+            >
 
-        <thead>
+            <select
+                id="driver"
+                required
+            >
+                <option value="">
+                    Select Driver
+                </option>
+            </select>
 
-            <tr>
+            <button type="submit">
+                Add Bus
+            </button>
 
-                <th>Bus Name</th>
-                <th>Plate Number</th>
-                <th>Capacity</th>
-                <th>Driver</th>
-                <th>Status</th>
-                <th>Action</th>
+        </form>
 
-            </tr>
+        <br>
 
-        </thead>
+        <table class="student-table">
 
-        <tbody id="busTableBody">
+            <thead>
 
-        </tbody>
+                <tr>
 
-    </table>
+                    <th>Bus Name</th>
+                    <th>Plate Number</th>
+                    <th>Capacity</th>
+                    <th>Driver</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="busTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
 
-<script src="script.js"></script>
+<script src="/script.js"></script>
 
 </body>
 </html>
