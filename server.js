@@ -143,6 +143,32 @@ app.delete("/students/delete/:id", (req, res) => {
 
     );
 
+});// Board Student
+
+app.put("/students/board/:id", (req, res) => {
+
+    db.run(
+
+        "UPDATE students SET status='Boarded' WHERE id=?",
+
+        [req.params.id],
+
+        function(err){
+
+            if(err){
+
+                console.log(err.message);
+
+                return res.send("Error boarding student.");
+
+            }
+
+            res.send("Student boarded.");
+
+        }
+
+    );
+
 });
 
 // ==========================

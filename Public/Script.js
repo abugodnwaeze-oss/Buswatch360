@@ -411,12 +411,11 @@ async function loadTripStudents() {
 
             <td>
 
-                <button>
+                <button onclick="boardStudent(${student.id})">
 
-                    Board
+    Board
 
-                </button>
-
+</button>
             </td>
 
         </tr>
@@ -424,5 +423,16 @@ async function loadTripStudents() {
         `;
 
     });
+
+}
+async function boardStudent(id){
+
+    await fetch(`/students/board/${id}`,{
+
+        method:"PUT"
+
+    });
+
+    loadTripStudents();
 
 }
