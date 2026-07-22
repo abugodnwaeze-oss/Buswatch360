@@ -407,11 +407,18 @@ document.getElementById("waitingCount").innerText =
     const missingList =
 document.getElementById("missingStudents");
 
+const missingList =
+document.getElementById("missingStudents");
+
 missingList.innerHTML = "";
 
-students.forEach(student=>{
+let missingCount = 0;
+
+students.forEach(student => {
 
     if(student.status !== "Boarded"){
+
+        missingCount++;
 
         missingList.innerHTML += `
             <li>${student.fullName}</li>
@@ -420,6 +427,14 @@ students.forEach(student=>{
     }
 
 });
+
+if(missingCount === 0){
+
+    missingList.innerHTML = `
+        <li>No students missing 🎉</li>
+    `;
+
+}
     const departureStatus =
     document.getElementById("departureStatus");
 
