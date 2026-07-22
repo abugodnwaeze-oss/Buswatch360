@@ -131,7 +131,7 @@ app.get("/buses/all",(req,res)=>{
 
 });
 
-app.post("/buses/add",(req,res)=>{
+app.post("/buses/add", (req, res) => {
 
     const {
         busName,
@@ -140,21 +140,46 @@ app.post("/buses/add",(req,res)=>{
         driver
     } = req.body;
 
-    db.run(
-        `INSERT INTO buses(busName,plateNumber,capacity,driver)
-         VALUES(?,?,?,?)`,
-        [
-            busName,
-            plateNumber,
-            capacity,
-            driver
-        ],
+    // Check if driver is already assigned
+    db.get(
+        "SELECT * FROM buses WHERE driver = ?",
+        [driver],
+        (err, row) => {
 
-        function(err){
+            if (err) {
+                console.log(err.message);
+                return res.send("Database error.");
+            }
 
-            if(err) return res.send("Error saving bus.");
+            if (row) {
+                return res.send(
+                    `Driver "${driver}" is already assigned to ${row.busName}.`
+                );
+            }
 
-            res.send("Bus saved successfully!");
+            db.run(
+                `INSERT INTO buses
+                (busName, plateNumber, capacity, driver)
+                VALUES (?, ?, ?, ?)`,
+                [
+                    busName,
+                    plateNumber,
+                    capacity,
+                    driver
+                ],
+
+                function (err) {
+
+                    if (err) {
+                        console.log(err.message);
+                        return res.send("Error saving bus.");
+                    }
+
+                    res.send("Bus saved successfully!");
+
+                }
+
+            );
 
         }
 
